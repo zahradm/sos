@@ -1,0 +1,1 @@
+from sos_data import adapters
