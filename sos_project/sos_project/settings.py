@@ -20,12 +20,46 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hutl7z+e0&h)m@mwssl(t17frgf3qz!@x^m_jz1*27zra2kt#3'
-
+import os
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "default-secret-key-for-dev")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+CSRF_COOKIE_AGE = 3600
+SESSION_COOKIE_AGE = 3600
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'security.log',
+        },
+    },
+    'loggers': {
+        'django.security': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+    },
+}
+
+
+X_FRAME_OPTIONS = "DENY"
+
 
 
 # Application definition
@@ -75,7 +109,6 @@ WSGI_APPLICATION = 'sos_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-import os
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
