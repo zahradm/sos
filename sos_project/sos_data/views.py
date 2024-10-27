@@ -8,7 +8,7 @@ from .serializers import (
     InsuranceInfoSerializer,
     PlanInfoSerializer,
     InsuredInfoSerializer)
-from .adapters import HekmatInsuranceAdapter
+from .adapters import HekmatInsuranceAdapter, DefaultInsuranceAdapter
 
 
 class InsuranceDataView(APIView):
@@ -20,6 +20,8 @@ class InsuranceDataView(APIView):
 
             if insurance_provider == "Hekmat":
                 adapter = HekmatInsuranceAdapter()
+            else:
+                adapter = DefaultInsuranceAdapter()
 
             # Personal Information
             personal_info_data = adapter.adapt_personal_info(request.data.get("personal_info", {}))

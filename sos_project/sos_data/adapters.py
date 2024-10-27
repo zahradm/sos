@@ -1,5 +1,43 @@
-class HekmatInsuranceAdapter:
+class BaseInsuranceAdapter:
+    def adapt_personal_info(self, data):
+        raise NotImplementedError("This method should be overridden in the subclass")
 
+    def adapt_insurer_info(self, data):
+        raise NotImplementedError("This method should be overridden in the subclass")
+
+    def adapt_policyholder_info(self, data):
+        raise NotImplementedError("This method should be overridden in the subclass")
+
+    def adapt_insurance_info(self, data):
+        raise NotImplementedError("This method should be overridden in the subclass")
+
+    def adapt_plan_info(self, data):
+        raise NotImplementedError("This method should be overridden in the subclass")
+
+    def adapt_insured_info(self, data):
+        raise NotImplementedError("This method should be overridden in the subclass")
+
+class DefaultInsuranceAdapter(BaseInsuranceAdapter):
+    def adapt_personal_info(self, data):
+        return data
+
+    def adapt_insurer_info(self, data):
+        return data
+
+    def adapt_policyholder_info(self, data):
+        return data
+
+    def adapt_insurance_info(self, data):
+        return data
+
+    def adapt_plan_info(self, data):
+        return data
+
+    def adapt_insured_info(self, data):
+        return data
+
+
+class HekmatInsuranceAdapter(BaseInsuranceAdapter):
     def adapt_personal_info(self, data):
         return {
             "first_name": data.get("f_name"),
